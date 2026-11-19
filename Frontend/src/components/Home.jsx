@@ -1,4 +1,3 @@
-import React from "react";
 import Feed from "./Feed";
 import Rightsidebar from "./Rightsidebar";
 import { Outlet } from "react-router-dom";

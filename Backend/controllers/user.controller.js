@@ -152,7 +152,9 @@ export const getProfile = async (req, res) => {
         );
         mutualConnections = mutualUsers.map(m => m.username);
       }
-      isConnection = user.connections && user.connections.includes(req.id);
+      isConnection = user.connections?.some(
+        (connection) => String(connection._id || connection) === req.id,
+      );
     } else if (req.id === userId) {
       isConnection = true; // User viewing their own profile
     }
@@ -161,7 +163,9 @@ export const getProfile = async (req, res) => {
     let filteredPosts = user.posts;
     let filteredBookmarks = user.bookmarks;
 
-    const isCloseFriend = req.id && user.closeFriends && user.closeFriends.includes(req.id);
+    const isCloseFriend = req.id && user.closeFriends?.some(
+      (friend) => String(friend._id || friend) === req.id,
+    );
 
     filteredPosts = filteredPosts.filter(p => {
       if (req.id === userId) return true; // Own profile
@@ -371,7 +375,9 @@ export const toggleCloseFriend = async (req, res) => {
       return res.status(404).json({ message: "User not found", success: false });
     }
 
-    const isCloseFriend = user.closeFriends.includes(targetUserId);
+    const isCloseFriend = user.closeFriends.some(
+      (friendId) => friendId.toString() === targetUserId,
+    );
 
     if (isCloseFriend) {
       // Remove from close friends

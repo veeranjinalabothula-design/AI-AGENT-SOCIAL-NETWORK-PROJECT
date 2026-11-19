@@ -48,9 +48,6 @@ files.forEach(file => {
     // Let's just create a generic API_URL constant at the top of the file if needed?
     // No, simple string replace:
     
-    const API_DEV = "http://localhost:8000";
-    const API_PROD = "https://socialhub-ai-backend.onrender.com"; // Predictable render URL
-    
     if (content.includes("http://localhost:8000")) {
         // Replace `http://localhost:8000...` with `${import.meta.env.MODE === 'development' ? 'http://localhost:8000' : 'https://socialhub-ai-backend.onrender.com'}...`
         content = content.replace(/`http:\/\/localhost:8000/g, "`${import.meta.env.MODE === 'development' ? 'http://localhost:8000' : 'https://socialhub-ai-backend.onrender.com'}/");

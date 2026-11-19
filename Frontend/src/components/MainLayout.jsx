@@ -1,4 +1,3 @@
-import React from "react";
 import LeftSidebar from "./Leftsidebar";
 import { Outlet } from "react-router-dom";
 import useGetNotifications from "@/hooks/useGetNotifications";

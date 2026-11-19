@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { MessageCircle, MoreHorizontal, Send, Bookmark } from "lucide-react";
+import { MessageCircle, MoreHorizontal, Send } from "lucide-react";
 import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa6";
 
 import {
@@ -22,9 +22,9 @@ const Post = ({ post }) => {
   const { user } = useSelector((store) => store.auth);
   const { posts } = useSelector((store) => store.post);
   const disptach = useDispatch();
-  const postRef = React.useRef(null);
+  const postRef = useRef(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {

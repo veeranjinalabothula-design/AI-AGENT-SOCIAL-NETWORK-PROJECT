@@ -80,7 +80,7 @@ export const getAllPost = async (req, res) => {
         { visibility: "public" },
         { visibility: { $exists: false } },
         { author: currentUserId },
-        { visibility: "close_friends", author: { $in: connectionIds } },
+        { visibility: "close_friends", author: { $in: friendsIds } },
         { visibility: "connections", author: { $in: connectionIds } }
       ]
     })

@@ -24,7 +24,7 @@ const useGetAllPost = () => {
       }
     };
     fetchAllPost();
-  }, [dispatch]);
+  }, [dispatch, token]);
 };
 
 export default useGetAllPost;

@@ -1,7 +1,7 @@
+import "dotenv/config";
 import express, { urlencoded } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import dotenv from 'dotenv';
 import connectMongoDB from "./utils/db.js";
 import userRoute from './routes/user.routes.js'
 import postRoute from './routes/post.routes.js'
@@ -10,9 +10,12 @@ import notificationRoute from './routes/notification.route.js'
 import paymentRoute from './routes/payment.routes.js'
 import {app,server} from "./socket/socket.js"
 
-dotenv.config({})
+const PORT = process.env.PORT || 8000
 
-const PORT = process.env.PORT || 3000
+if (!process.env.SECRET_KEY) {
+  console.error("SECRET_KEY is required. Set it in Backend/.env before starting the API.");
+  process.exit(1);
+}
 
 app.get("/", (_,res) => {
   return res.status(200).json({

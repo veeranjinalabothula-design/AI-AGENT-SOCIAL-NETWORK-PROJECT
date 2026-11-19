@@ -20,12 +20,11 @@ import { removePost } from "./redux/postSlice";
 
 function App() {
   const { user } = useSelector((store) => store.auth);
-  const { socket } = useSelector((store)=> store.socketio)
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (user) {
-      const socketio = io(import.meta.env.VITE_BACKEND_URL, {
+      const socketio = io(import.meta.env.VITE_BACKEND_URL || "http://localhost:8000", {
         query: {
           userId: user?._id,
         },
@@ -49,9 +48,6 @@ function App() {
         socketio.close();
         dispatch(setSocket(null));
       };
-    } else if(socket){
-      socket.close();
-      dispatch(setSocket(null))
     }
 
   },[user, dispatch]);

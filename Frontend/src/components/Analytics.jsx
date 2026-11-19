@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import { BarChart3, TrendingUp, Heart, Eye, IndianRupee, MessageCircle, Wallet } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -24,20 +23,11 @@ const Analytics = () => {
   const posts = user.posts || [];
   
   // Calculate aggregated stats
-  const totalPosts = posts.length;
-  let totalViews = 0;
-  let totalLikes = 0;
-  let totalComments = 0;
-
   // We want to sort posts by engagement (views + likes + comments) to find top performers
   const postsWithStats = posts.map(post => {
     const views = post.viewedBy?.length || 0;
     const likes = post.likes?.length || 0;
     const comments = post.comments?.length || 0;
-    
-    totalViews += views;
-    totalLikes += likes;
-    totalComments += comments;
 
     return {
       ...post,
@@ -47,6 +37,14 @@ const Analytics = () => {
       engagementScore: views + (likes * 2) + (comments * 3) // Weighted score
     };
   });
+  const { totalViews, totalLikes, totalComments } = postsWithStats.reduce(
+    (totals, post) => ({
+      totalViews: totals.totalViews + post.views,
+      totalLikes: totals.totalLikes + post.likes,
+      totalComments: totals.totalComments + post.comments,
+    }),
+    { totalViews: 0, totalLikes: 0, totalComments: 0 },
+  );
 
   const totalEarnings = user.walletBalance || 0;
   

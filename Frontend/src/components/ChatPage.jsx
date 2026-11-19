@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { setSelectedUser } from "@/redux/authSlice";
@@ -12,7 +12,7 @@ import { setMessages, clearUnreadMessage } from "@/redux/chatSlice";
 
 const ChatPage = () => {
   const [textMessage, setTextMessage] = useState("");
-  const { user, suggestedUsers, selectedUser } = useSelector(
+  const { user, selectedUser } = useSelector(
     (store) => store.auth,
   );
   const { onlineUsers, messages, unreadMessageMap } = useSelector((store) => store.chat);
@@ -42,7 +42,7 @@ const ChatPage = () => {
     return () => {
       dispatch(setSelectedUser(null));
     };
-  }, []);
+  }, [dispatch]);
   // Ensure suggested users are fetched even if the user went straight to /chat
   useGetSuggestedUsers(user);
   useGetAllMessage(selectedUser?._id);

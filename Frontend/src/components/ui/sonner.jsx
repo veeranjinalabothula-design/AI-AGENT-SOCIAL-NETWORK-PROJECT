@@ -6,16 +6,7 @@ import "sonner/dist/styles.css";
 const Toaster = ({
   ...props
 }) => {
-  // Safe fallback to "light" theme if next-themes Provider is not wrapping the app
-  let theme = "light";
-  try {
-    const themeContext = useTheme();
-    if (themeContext && themeContext.theme) {
-      theme = themeContext.theme;
-    }
-  } catch (e) {
-    // next-themes is not configured, fallback to light
-  }
+  const theme = useTheme()?.theme || "light";
 
   return (
     <Sonner

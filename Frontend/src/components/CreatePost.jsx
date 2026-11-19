@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Dialog, DialogContent, DialogHeader } from "./ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Textarea } from "./ui/textarea";
@@ -56,7 +56,7 @@ const CreatePost = ({ open, setOpen }) => {
     setOpen(false);
   };
 
-  const postHandler = async (e) => {
+  const postHandler = async () => {
     if (!file) {
       toast.error("Please select an image first");
       return;
@@ -135,6 +135,7 @@ const CreatePost = ({ open, setOpen }) => {
             >
               <option value="public">Public</option>
               <option value="connections">Friends Only</option>
+              <option value="close_friends">Close Friends</option>
             </select>
           </div>
 

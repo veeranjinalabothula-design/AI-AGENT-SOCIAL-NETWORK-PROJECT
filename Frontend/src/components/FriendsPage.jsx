@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Post from './Post';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';

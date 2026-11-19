@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setPosts } from "@/redux/postSlice";
 import { setMessages } from "@/redux/chatSlice";
 
 const useGetAllMessage = () => {
@@ -11,18 +10,20 @@ const useGetAllMessage = () => {
   useEffect(() => {
     const fetchAllMessgaes = async () => {
       try {
-        const res = await axios.get(`/api/v1/all/${selectedUser?._id}`, {
+        const res = await axios.get(`/api/v1/message/all/${selectedUser?._id}`, {
           withCredentials: true,
         });
         if (res.data.success) {
-          dispatch(setMessages(res.data.messages));
+          dispatch(setMessages(res.data.messages || []));
         }
       } catch (error) {
-        console.error("Error fetching posts:", error);
+        console.error("Error fetching messages:", error);
       }
     };
-    fetchAllMessgaes();
-  }, [dispatch]);
+    if (selectedUser?._id) {
+      fetchAllMessgaes();
+    }
+  }, [dispatch, selectedUser?._id]);
 };
 
 export default useGetAllMessage;

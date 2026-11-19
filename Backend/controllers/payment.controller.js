@@ -1,15 +1,23 @@
 import { User } from "../models/user.model.js";
 
-const rzpKeyId = process.env.RAZORPAY_KEY_ID || "rzp_test_T7vnV7hyvL2u1X";
-const rzpKeySecret = process.env.RAZORPAY_KEY_SECRET || "MISSING_SECRET";
-
-const rzpHeaders = {
-  'Content-Type': 'application/json',
-  'Authorization': 'Basic ' + Buffer.from(`${rzpKeyId}:${rzpKeySecret}`).toString('base64')
-};
+const rzpKeyId = process.env.RAZORPAY_KEY_ID;
+const rzpKeySecret = process.env.RAZORPAY_KEY_SECRET;
 
 export const withdrawFunds = async (req, res) => {
   try {
+    const razorpayAccountNumber = process.env.RAZORPAYX_ACCOUNT_NUMBER;
+    if (!rzpKeyId || !rzpKeySecret || !razorpayAccountNumber) {
+      return res.status(503).json({
+        message: "Withdrawals are not configured",
+        success: false,
+      });
+    }
+
+    const rzpHeaders = {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${Buffer.from(`${rzpKeyId}:${rzpKeySecret}`).toString("base64")}`,
+    };
+
     const userId = req.id;
     const { amount, accountName, accountNumber, ifscCode } = req.body;
 
@@ -48,7 +56,7 @@ export const withdrawFunds = async (req, res) => {
     const payoutRes = await fetch("https://api.razorpay.com/v1/payouts", {
       method: "POST", headers: rzpHeaders,
       body: JSON.stringify({
-        account_number: process.env.RAZORPAYX_ACCOUNT_NUMBER || "2323230026601614",
+        account_number: razorpayAccountNumber,
         fund_account_id: fundAccount.id,
         amount: amount * 100, // paise
         currency: "INR",

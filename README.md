@@ -1,81 +1,50 @@
-# SocialHub AI 🚀
+# SocialHub AI
 
-Welcome to **SocialHub AI** — a next-generation, AI-powered social connectivity platform built on the modern MERN stack. SocialHub AI reimagines social media with a sleek, responsive design, robust real-time features, and granular privacy controls.
+A full-stack social network built with React, Express, MongoDB, and Socket.IO. It includes account registration and login, posts, comments, connections, messaging, notifications, profile pages, and optional Cloudinary uploads and Razorpay payouts.
 
-### 🔗 Live Links
-- **Live Demo (Frontend):** [https://socialhub-ai-ten.vercel.app](https://socialhub-ai-ten.vercel.app)
-- **Backend API:** [https://socialhub-ai.onrender.com](https://socialhub-ai.onrender.com)
+## Requirements
 
-## ✨ Key Features
+- Node.js 20.19+ or 22.12+
+- npm
+- MongoDB running locally or a MongoDB Atlas connection string
+- A Cloudinary account for image uploads (optional until uploads are used)
+- RazorpayX credentials for withdrawals (optional)
 
-- **Granular Privacy Controls:** Advanced post visibility settings allowing users to share posts with "Public", "Connections Only", or "Close Friends".
-- **Real-Time Messaging:** Instant, lag-free chat powered by Socket.io, including typing indicators and online statuses.
-- **Dynamic Explore Grid:** Discover trending posts, photos, and short films in a beautiful masonry layout.
-- **Rich Media Uploads:** Seamless image and video uploads powered by Cloudinary integration.
-- **Bulletproof Authentication:** Secure JWT-based login and signup system using robust header-based authorization to bypass cross-site cookie restrictions.
-- **Sleek UI/UX:** Fully responsive design built with TailwindCSS and Shadcn UI, featuring an integrated Dark Mode toggle and smooth micro-animations.
-- **State Management:** Highly optimized frontend state handled by Redux Toolkit (Redux Persist).
+## Local setup
 
-## 🛠️ Tech Stack
+### 1. Configure the backend
 
-**Frontend:**
-- React 18 (Vite)
-- Tailwind CSS & Shadcn UI
-- Redux Toolkit (State Management)
-- Lucide React (Icons)
-- Axios (API Client with Interceptors)
-
-**Backend:**
-- Node.js & Express
-- MongoDB & Mongoose
-- Socket.io (WebSockets for Real-Time Chat)
-- Cloudinary (Media Storage)
-- JSON Web Tokens (Authentication)
-- Bcryptjs (Password Hashing)
-
-## 🚀 Getting Started
-
-Follow these steps to run the project locally on your machine.
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/Bhaveshkransan/socialhub-ai.git
-cd socialhub-ai
-```
-
-### 2. Backend Setup
-```bash
+```powershell
 cd Backend
+Copy-Item .env.example .env
 npm install
-```
-Create a `.env` file inside the `Backend` directory and add your environment variables:
-```env
-PORT=8000
-MONGO_URI=your_mongodb_connection_string
-SECRET_KEY=your_jwt_secret
-CLOUDINAY_KEY=your_cloudinary_key
-CLOUDINARY_SECRET=your_cloudinary_secret
-CLOUD_NAME=your_cloudinary_name
-FRONTEND_URL=http://localhost:5173
-```
-Start the backend server:
-```bash
 npm run dev
 ```
 
-### 3. Frontend Setup
-Open a new terminal window and navigate to the frontend directory:
-```bash
+Edit `Backend/.env` and set `MONGO_URI` to your MongoDB connection string and `SECRET_KEY` to a private, random value. Set the Cloudinary variables to enable media uploads. RazorpayX variables are only needed for withdrawals. The API listens on `http://localhost:8000` by default.
+
+### 2. Configure and run the frontend
+
+Open a second terminal at the project root:
+
+```powershell
 cd Frontend
+Copy-Item .env.example .env
 npm install
-```
-Start the React development server:
-```bash
 npm run dev
 ```
 
-### 4. Enjoy!
-Open your browser and navigate to `http://localhost:5173` to explore SocialHub AI!
+Open the Vite URL shown in the terminal (normally `http://localhost:5173`). The frontend sends `/api` requests through Vite to the backend and connects to the same backend for Socket.IO.
 
----
-*Built with ❤️ for the future of social networking.*
+## Build and lint
+
+From `Frontend`:
+
+```powershell
+npm run build
+npm run lint
+```
+
+## Environment variables
+
+`Backend/.env.example` and `Frontend/.env.example` list the local configuration. Never commit `.env` files or real credentials. `VITE_BACKEND_URL` defaults to `http://localhost:8000`; set it to your backend origin when using a non-default host or port.

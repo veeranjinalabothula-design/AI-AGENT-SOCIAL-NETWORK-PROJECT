@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
@@ -20,7 +20,6 @@ const Profile = () => {
   const { fetchUserProfile } = useGetUserProfile(id);
   
   const [activeTab, setActiveTab] = useState("posts");
-  const [closeFriendsOpen, setCloseFriendsOpen] = useState(false);
   const [connectionsOpen, setConnectionsOpen] = useState(false);
 
   const followOrUnfollowHandler = async () => {
@@ -206,6 +205,14 @@ const Profile = () => {
                       Connect
                     </Button>
                   )}
+                  <Button
+                    onClick={toggleCloseFriendHandler}
+                    variant={isCloseFriend ? "secondary" : "outline"}
+                    className="font-semibold px-4 py-1.5 h-auto text-sm rounded-lg flex items-center gap-2"
+                  >
+                    <Star className={`w-4 h-4 ${isCloseFriend ? "fill-current" : ""}`} />
+                    {isCloseFriend ? "Close friend" : "Add close friend"}
+                  </Button>
                 </>
               )}
             </div>

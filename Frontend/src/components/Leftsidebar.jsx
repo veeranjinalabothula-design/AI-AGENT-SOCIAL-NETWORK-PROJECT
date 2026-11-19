@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Home,
   Search,
   LogOut,
   MessageCircle,
   PlusSquare,
-  TrendingUp,
   Heart,
   BarChart3,
   Moon,

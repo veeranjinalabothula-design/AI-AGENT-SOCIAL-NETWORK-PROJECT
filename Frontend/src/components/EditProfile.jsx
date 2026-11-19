@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -16,20 +16,12 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef();
   
-  const [editBio, setEditBio] = useState("");
-  const [editUsername, setEditUsername] = useState("");
-  const [editGender, setEditGender] = useState("Male");
+  const [editBio, setEditBio] = useState(user?.bio || "");
+  const [editUsername, setEditUsername] = useState(user?.username || "");
+  const [editGender, setEditGender] = useState(user?.gender || "Male");
   const [selectedFile, setSelectedFile] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (user) {
-      setEditBio(user.bio || "");
-      setEditUsername(user.username || "");
-      setEditGender(user.gender || "Male");
-    }
-  }, [user]);
 
   const fileChangeHandler = async (e) => {
     const file = e.target.files?.[0];
